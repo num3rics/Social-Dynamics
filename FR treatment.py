@@ -2,9 +2,9 @@
 # Project: TFG
 #
 # Notes: Todo el código, itera sobre los archivos y saca todos los resultados
-# Intructions: Elegir un tamaño de la red y un número de rondas, y él solo itera sobre todos los valores de factor y porcentaje_falsos.
+# Instructions: Elegir un tamaño de la red y un número de rondas, y él solo itera sobre todos los valores de factor y porcentaje_falsos.
 
-#                                       ====== IMPORTAR PAQUETES ======
+#                             ====== IMPORTAR PAQUETES ======
 import networkx as nx
 import copy
 import random
@@ -32,16 +32,20 @@ from matplotlib.pyplot import cm
 contador_vueltas = 0
 
 
-#                                          ====== VARIABLES ======
+#                               ====== VARIABLES ======
 
 # Valores de los parametros
 ##################################################################
-factores=[0.95, 1]                                               #
+# factores=[0.95, 1]                                               #
+factores = input("Introduce _factor_ values (separated by spaces): ")
+factores = np.array(factores.split())
 ##################################################################
 
 # Tamanio y conectividad de la red
 ##################################################################
-N = 20   # N = numero de agentes (nodos) en la red               #
+#N = 20   # N = numero de agentes (nodos) en la red               #
+N = input("Introduce the number of nodes in the network: ")
+N = int(N)
 d = 4   # d = grado inicial de los nodos en la red               #
 ##################################################################
 
@@ -65,12 +69,16 @@ probsCheatersNoColab = [0.2, 0.3, 0.4, 0.5]                      #
 
 # Duracion juegos
 ##################################################################
-NUMrondas = 100   # numero de rondas jugadas                      #
+#NUMrondas = 100   # numero de rondas jugadas                      #
+NUMrondas = input("Introduce the number of rounds: ")
+NUMrondas = int(NUMrondas)
 ##################################################################
 
 # Cantidad de los programas
 ##################################################################
-NUMprogram = 5  # veces que se repite el programa                #
+#NUMprogram = 5  # veces que se repite el programa                #
+NUMprogram = input("Introduce the number of programs to be run: ")
+NUMprogram = int(NUMprogram)
 ##################################################################
 
 # Variables para crear los heatmaps
@@ -821,17 +829,12 @@ for factor in factores:
 
                 for i in range(NUMrondas):
                     aux00[i]=round(aux00[i],4)
-                #print('aux00:')
-                #print(aux00)
 
                 aux11=aux00.copy()
                 for i in range(NUMrondas):
                     aux11[i]=aux11[i]/zz
                 for i in range(NUMrondas):
                     aux11[i]=round(aux11[i],4)
-                #print('aux11:')
-                #print(aux11)
-                # ya tengo la ecuacion [1]
 
                 with open(pathJuntar + "/juntarC.txt", "a") as myfile:
                     myfile.write(str(aux11)+"\n")
@@ -839,7 +842,6 @@ for factor in factores:
                 #print(aux11[-1])
                 # <Guardo el dato para el HEATMAP>
                 HM_colabMreal[u][h][w][uu]=aux11[-1] 
-
                 # </Guardo el dato para el HEATMAP>
                 # 
                 ###################################################################
@@ -853,17 +855,12 @@ for factor in factores:
 
                 for i in range(NUMrondas):
                     aux22[i]=round(aux22[i],4)
-                #print('aux22:')
-                #print(aux22)
 
                 aux33=aux22.copy()
                 for i in range(NUMrondas):
                     aux33[i]=aux33[i]/zz
                 for i in range(NUMrondas):
                     aux33[i]=round(aux33[i],4)
-                #print('aux33:')
-                #print(aux33)
-                # ya tengo la ecuacion [2]
 
                 sigmac = [0 for x in range(NUMrondas)]
 
@@ -872,8 +869,6 @@ for factor in factores:
 
                 for i in range(NUMrondas):
                     sigmac[i]=round(sigmac[i],4)
-                #print('sigmac')
-                #print(sigmac)
 
                 ##############################
                 #Standard error
@@ -939,7 +934,6 @@ for factor in factores:
                 # <Guardo el dato para el HEATMAP>
                 # 
                 HM_ultcolab[u][h][w][uu]=coop00[-1] 
-
                 # </Guardo el dato para el HEATMAP>
 
                 ########################################################################################
@@ -958,12 +952,8 @@ for factor in factores:
                 #plt.show()
                 plt.close()
 
-
-
                 ########################################################################################
                 ########################################################################################
-                
-
 
                 aux000 = [0 for x in range(NUMrondas)]
                 aux111 = [0 for x in range(NUMrondas)]
@@ -1015,7 +1005,6 @@ for factor in factores:
 
                 # <Guardo el dato para el HEATMAP>
                 HM_colabMvisible[u][h][w][uu]=aux111[-1] 
-
                 # </Guardo el dato para el HEATMAP>
                 # 
                 ###################################################################
@@ -1098,56 +1087,6 @@ for factor in factores:
 
 
 
-
-                ################################################################################################################
-                ################################################################################################################
-
-                #temporal_puntos = [[0 for x in range(N)] for x in range(NUMprogram)]
-                #temporal_porcentaje = [[0 for x in range(N)] for x in range(NUMprogram)] 
-
-                #for i in range(zz):
-                #    filename = (pathArchivos + '/archivo_puntos_porcentaje_%i.txt' %(i+1))
-                #    with open(filename) as input_data:
-                #        for line in input_data:  # This keeps reading the file
-                #            if line.strip() == 'fin':
-                #                break
-                #            puntos_delarchivo = ast.literal_eval(line)
-                #            porcentaje_delarchivo = ast.literal_eval(line)
-
-                #    for k in range(N):
-                #        puntos_delarchivo[k] = round(puntos_delarchivo[k], 4)
-                #        porcentaje_delarchivo[k] = round(porcentaje_delarchivo[k], 4)3
-
-                #    temporal_puntos[i] = puntos_delarchivo
-                #    temporal_porcentaje[i] = porcentaje_delarchivo
-
-
-                #for i in range(NUMprogram):
-                #    plt.scatter(temporal_puntos[i], temporal_porcentaje[i], c='k',  marker='.', s=100, alpha=0.15)
-
-                #plt.plot([0,5], [1,0], color='k', linestyle='dotted', lw=1)
-                #plt.plot([0.5,0.5], [0.05, 0.95], color='r', linestyle='solid', lw=1)
-                #plt.ylim([0,1])
-                #plt.xlim([0,5])
-                #plt.ylabel('Índice de cooperación')
-                #plt.xlabel('Puntos comprados')
-                #plt.title('COOP-POINTS F %.2f' %factor + ', rhoD %.2f' %probCheatersNoColab + ', rhoC %.2f' %probHonestComprar)
-                ##plt.savefig(pathCheatersNoColab + '/COOP POINTS F %.2f' %factor + ', rhoD %.2f' %probCheatersNoColab + '.png')
-                #plt.savefig(pathCarpetas + '/COOP_POINTS_P_%.2f_' %porcentaje_falsos + 'F_%.2f' %factor + '_rhoD_%.2f' %probCheatersNoColab + '_rhoC_%.2f' %probHonestComprar+'.png')
-                #plt.close()
-
-
-
-                
-
-
-
-
-
-
-
-
-
                 #########################################################################################
                 ##################################   JUNTARLAS   ########################################
                 #########################################################################################
@@ -1164,8 +1103,6 @@ for factor in factores:
                     elif(probHonestComprar==probsHonestComprar[-1]):
                         NUMfactor = 2#len(probsHonestComprar)
                         #print("NUMfactor=len(probHonestComprar)")
-
-
 
                     vector_juntar = [[0 for x in range(NUMrondas)] for x in range(NUMfactor)]
                     vector_juntar_std_error = [[0 for x in range(NUMrondas)] for x in range(NUMfactor)]
@@ -1328,5 +1265,3 @@ with open(pathCarpetas + "/heatmap_colabMvisible.txt", "a") as myfile:
 
 with open(pathCarpetas + "/heatmap_colabMreal.txt", "a") as myfile:
     myfile.write(str(HM_colabMreal)+"\n")
-
-#print("Fin del programa")
